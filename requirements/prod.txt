@@ -1,0 +1,31 @@
+# Everything needed in production
+
+# Flask
+Flask==0.12.2
+Werkzeug==0.12.2
+itsdangerous==0.24
+click>=5.0
+webargs==1.7.0
+
+# Database
+Flask-SQLAlchemy==2.2
+psycopg2==2.7.1
+SQLAlchemy==1.1.10
+
+# Migrations
+Flask-Migrate==2.0.3
+
+# ReST
+flask-restful==0.3.5
+flask-cors==3.0.2
+
+# Deployment
+gunicorn>=19.1.1
+
+# Auth
+Flask-Bcrypt==0.7.1
+Flask-JWT==0.3.2
+Flask-Login==0.4.0
+
+# Caching
+Flask-Caching>=1.0.0
