@@ -3,18 +3,13 @@
 from flask import Flask
 
 from vimcar import commands
-from vimcar.auth import jwt
-from vimcar.extensions import api, bcrypt, cache, cors, db, migrate
+from vimcar.extensions import api, bcrypt, db, migrate, mail
 from vimcar.resources import users
 from vimcar.settings import ProdConfig
 
 
 def create_app(config_object=ProdConfig, api=api):
-    """An application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
-
-    :param config_object: The configuration object to use.
-    :param api: The Flask-restful API instance.
-    """
+    """An application factory."""
     app = Flask(__name__.split('.')[0])
     app.config.from_object(config_object)
 
@@ -26,34 +21,25 @@ def create_app(config_object=ProdConfig, api=api):
 
 
 def register_extensions(app):
-    """Register Flask extensions.
-
-    :param app: The Flask application instance.
-    """
+    """Register Flask extensions."""
     api.init_app(app)
     bcrypt.init_app(app)
-    cache.init_app(app)
-    cors.init_app(app)
     db.init_app(app)
+    mail.init_app(app)
     migrate.init_app(app, db)
     return None
 
 
 def register_resources(api):
-    """Register Flask-restful resources.
-
-    :param api: The Flask-restful API instance.
-    """
+    """Register Flask-restful resources."""
     api.add_resource(users.UserViewList, '/api/users')
     api.add_resource(users.UserView, '/api/users/<user_id>')
+    api.add_resource(users.ConfirmationView, '/api/confirmation/<token>')
     return None
 
 
 def register_shellcontext(app):
-    """Register shell context objects.
-
-    :param app: The Flask application instance.
-    """
+    """Register shell context objects."""
     def shell_context():
         """Shell context objects."""
         return {
@@ -64,11 +50,6 @@ def register_shellcontext(app):
 
 
 def register_commands(app):
-    """Register Click commands.
-
-    :param app: The Flask application instance.
-    """
+    """Register Click commands."""
     app.cli.add_command(commands.test)
-    app.cli.add_command(commands.lint)
-    app.cli.add_command(commands.clean)
     app.cli.add_command(commands.urls)
