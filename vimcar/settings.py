@@ -6,15 +6,20 @@ import os
 class Config(object):
     """Base configuration."""
 
-    SECRET_KEY = os.environ.get('FLESKFUL_SECRET', 'secret-key')  # TODO: Change me
+    SECRET_KEY = os.environ.get('VIMCAR_SECRET', 'f495b66803a6512d')
+    SECURITY_SALT = os.environ.get('VIMCAR_SALT', '14be1971fc014f1b84')
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     BCRYPT_LOG_ROUNDS = 13
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     DEBUG_TB_INTERCEPT_REDIRECTS = False
-    CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    MAIL_SERVER = os.environ.get('VIMCAR_MAIL_SERVER', 'smtp.mailtrap.io')
+    MAIL_PORT = os.environ.get('VIMCAR_MAIL_PORT', 2525)
+    MAIL_USERNAME = os.environ.get('VIMCAR_MAIL_USERNAME', 'a9b27dbd9c4f39')
+    MAIL_PASSWORD = os.environ.get('VIMCAR_MAIL_PASSWORD', 'ffbab59f515653')
+    MAIL_DEFAULT_SENDER = os.environ.get('VIMCAR_MAIL_SENDER', 'noreply@vimcar.de')
 
 class ProdConfig(Config):
     """Production configuration."""
@@ -35,7 +40,6 @@ class DevConfig(Config):
     DB_PATH = os.path.join(Config.PROJECT_ROOT, DB_NAME)
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
     DEBUG_TB_ENABLED = True
-    CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
 
 
 class TestConfig(Config):
