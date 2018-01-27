@@ -1,23 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Auth module, including the JWT object and related handler methods."""
-
-from flask_jwt import JWT
-
+"""Basic authentication moduel for the app."""
+from flask_httpauth import HTTPBasicAuth
 from vimcar.models.users import User
 
-jwt = JWT()
+auth = HTTPBasicAuth()
 
-
-@jwt.authentication_handler
-def authenticate(username, password):
-    """JWT authentication callback."""
-    user = User.query.filter_by(username=username).first()
-    if user and user.check_password(password):
-        return user
-
-
-@jwt.identity_handler
-def identitiy(payload):
-    """JWT identity callback."""
-    user_id = payload['identity']
-    return User.get_by_id(user_id)
+@auth.verify_password
+def verify_password(email, password):
+    """Basic authentication password verification."""
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return user.check_password(password)
+    return False
