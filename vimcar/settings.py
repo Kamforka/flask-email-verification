@@ -15,11 +15,11 @@ class Config(object):
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    MAIL_SERVER = os.environ.get('VIMCAR_MAIL_SERVER', 'smtp.mailtrap.io')
-    MAIL_PORT = os.environ.get('VIMCAR_MAIL_PORT', 2525)
-    MAIL_USERNAME = os.environ.get('VIMCAR_MAIL_USERNAME', 'a9b27dbd9c4f39')
-    MAIL_PASSWORD = os.environ.get('VIMCAR_MAIL_PASSWORD', 'ffbab59f515653')
-    MAIL_DEFAULT_SENDER = os.environ.get('VIMCAR_MAIL_SENDER', 'noreply@vimcar.de')
+    MAIL_SERVER = 'smtp.mailtrap.io'
+    MAIL_PORT = 2525
+    MAIL_USERNAME = 'a9b27dbd9c4f39'
+    MAIL_PASSWORD = 'ffbab59f515653'
+    MAIL_DEFAULT_SENDER = 'noreply@vimcar.de'
 
 class ProdConfig(Config):
     """Production configuration."""
