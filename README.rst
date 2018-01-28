@@ -108,7 +108,7 @@ Update a user
 
 To update a single user you need to pass the key-value pairs of the fields that should be modified to the ``/api/users/<user_id>`` using a ``PUT`` request ::
 
-    curl -u foo@bar.com:bar -X PUT http://127.0.0.1:5000/api/users/1 -d password=foobar
+    curl -u foo@bar.com:bar -X PUT http://127.0.0.1:5000/api/users/1 -d email=bar@foo.com
 
 As a response you will get the updated instance ::
 
