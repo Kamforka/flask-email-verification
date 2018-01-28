@@ -17,15 +17,10 @@ Flask-Migrate==2.0.3
 
 # ReST
 flask-restful==0.3.5
-flask-cors==3.0.2
-
-# Deployment
-gunicorn>=19.1.1
 
 # Auth
 Flask-Bcrypt==0.7.1
-Flask-JWT==0.3.2
-Flask-Login==0.4.0
+Flask-HTTPAuth
 
-# Caching
-Flask-Caching>=1.0.0
+# Mailing
+Flask-Mail
