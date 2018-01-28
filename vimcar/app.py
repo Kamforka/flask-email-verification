@@ -34,7 +34,7 @@ def register_resources(api):
     """Register Flask-restful resources."""
     api.add_resource(users.UserViewList, '/api/users')
     api.add_resource(users.UserView, '/api/users/<user_id>')
-    api.add_resource(users.ConfirmationView, '/api/confirmation/<token>')
+    api.add_resource(users.ConfirmationView, '/confirmation/<token>')
     return None
 
 
