@@ -1,31 +1,25 @@
-===============================
 Vimcar backend API coding challenge
-===============================
+====================================
 
-Vimcar backend API coding challenge
+Vimcar backend application by Szabolcs Antal.
 
 
 Quickstart
 ----------
 
-First, set your app's secret key as an environment variable. For example,
-add the following to ``.bashrc`` or ``.bash_profile``.
 
-.. code-block:: bash
 
-    export VIMCAR_SECRET='something-really-secret'
+First run the following commands to bootstrap your environment ::
 
-Before running shell commands, set the ``FLASK_APP`` and ``FLASK_DEBUG``
+    git clone https://github.com/kamforka/vimcar-backend-challenge
+    cd vimcar-backend-challenge
+    pip install -r requirements/dev.txt
+
+Then set the ``FLASK_APP`` and ``FLASK_DEBUG``
 environment variables ::
 
     export FLASK_APP=/path/to/autoapp.py
     export FLASK_DEBUG=1
-
-Then run the following commands to bootstrap your environment ::
-
-    git clone https://github.com/kamforka/vimcar
-    cd vimcar
-    pip install -r requirements/dev.txt
 
 To create the sqlite database instance type the following ::
 
@@ -33,37 +27,91 @@ To create the sqlite database instance type the following ::
     flask db migrate
     flask db upgrade
 
+Also you might need to set up different credentials for the mailing service. In order to do that
+you should override the below configurations in the ``settings.py`` file ::
+
+    MAIL_SERVER = 'smtp.mailtrap.io'
+    MAIL_PORT = 2525
+    MAIL_USERNAME = 'a9b27dbd9c4f39'
+    MAIL_PASSWORD = 'ffbab59f515653'
+    MAIL_DEFAULT_SENDER = 'noreply@vimcar.de'
+
 Now you can start up the application ::
 
     flask run
 
-Your app will be served on http://127.0.0.1:5000/ by default.
+Your app will be served at http://127.0.0.1:5000/ by default.
 
-To explore the api, first create a user.
-For this you can use a command line application like curl. ::
+Features
+--------
 
-    curl -H "Content-type: application/json" -X POST -d '{"username":"foo", "password":"bar", "email":"foo@bar.com"}' http://127.0.0.1:5000/api/users
+- Register user
+- Confirm user registration
+- Get user by id (authentication required)
+- Get user list (authentication required)
+- Update a user (authentication required)
 
-Then with your new user you can get an authentication token by ::
 
-    curl -H "Content-type: application/json" -X POST -d '{"username":"foo", "password":"bar"}' http://127.0.0.1:5000/auth
+User Registration
+.................
 
-The api will respond with an access token ::
+To regiser a user, just make a POST request to the `/api/users/` endpoint with the email and password fields ::
+
+    curl -X POST http://127.0.0.1:5000/api/users -d email=foo@bar.com -d password=bar
+
+You will get a response like this ::
 
     {
-        "access_token": "eyJhbGciOiJIUzI1..."
+        "active": false,
+        "email": "foo@bar.com",
+        "id": 1
     }
-
-As the api uses JWT tokens for authentication, you can get the user list by requesting the users view with the token received ::
-
-    curl -H "Authorization: JWT <access_token>" -X GET http://127.0.0.1:5000/api/users
-
-If the provided token is valid the response will contain the list of users ::
     
+Confirm registration
+....................
+
+As you can see from the previous response the state of the user is inactive by default, so to activate it you should navigate to the mail server you set up for development and click the activation link sent by the API.
+
+To check whether the activation was successful or not you can retrieve the user by id.
+
+Get user by id
+..............
+
+In order to get a user from the API you must make a request to the `/api/users/<user_id>` endpoint with Basic authentication credentials, for simplicity you can use the `email` and the `password` of any registered user. ::
+
+    curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users/1 
+
+If everything went fine during the registration and activation you will probably get a similiar response as below ::
+
     {
-        "username": "foo",
-        "id": 1,
-        "email": "foo@bar.com"
+        "active": true,
+        "email": "foo@bar.com",
+        "id": 1
+    }
+    
+Quite the same as before, but now the user is activated.
+
+
+Get list of users
+.................
+
+You can also get the full list of registered users by making a `GET` request to the `/api/users` endpoint. Not to mention you still need authentication to pass. ::
+
+    curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users
+    
+Update a user
+.............
+
+To update a single user you need to pass the key-value pairs of the fields that should be modified to the `/api/users/<user_id>` using a `PUT` request ::
+
+    curl -u foo@bar.com:bar -X PUT http://127.0.0.1:5000/api/users/1 -d password=foobar
+
+As a response you will get the updated instance ::
+
+    {
+        "active": true,
+        "email": "bar@foo.com",
+        "id": 1
     }
 
 
@@ -79,12 +127,13 @@ By default, you will have access to the flask ``app``, to the ``db`` instance an
 To manage the application`s users from the shell instead of the api ::
 
     >>> User.query.all()
-    [<User (u'foo')>]
-    >>> user = User.query.filter_by(username="foo").first()
+    [<User('bar@foo.com')>]
+    >>> user = User.query.filter_by(email="bar@foo.com").first()
     >>> user.email
-    u'foo@bar.com'
-    >>> User.create(username="phoo", email="phoo@oohp.com")
-    <User (u'phoo')>
+    'bar@foo.com'
+    >>> User.create(email="foo@foo.com")
+    <User('foo@foo.com')>
+
 
 
 Running Tests
