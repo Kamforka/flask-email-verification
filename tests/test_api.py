@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Model unit tests."""
 import pytest
-from pytest_mock import mocker
 from vimcar.models.users import User
 from vimcar.utils import generate_confirmation_token
 
