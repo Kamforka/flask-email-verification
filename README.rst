@@ -55,7 +55,7 @@ Features
 User Registration
 .................
 
-To regiser a user, just make a POST request to the `/api/users/` endpoint with the email and password fields ::
+To regiser a user, just make a ``POST`` request to the ``/api/users`` endpoint with the ``email`` and ``password`` fields ::
 
     curl -X POST http://127.0.0.1:5000/api/users -d email=foo@bar.com -d password=bar
 
@@ -77,7 +77,7 @@ To check whether the activation was successful or not you can retrieve the user 
 Get user by id
 ..............
 
-In order to get a user from the API you must make a request to the `/api/users/<user_id>` endpoint with Basic authentication credentials, for simplicity you can use the `email` and the `password` of any registered user. ::
+In order to get a user from the API you must make a ``GET`` request to the ``/api/users/<user_id>`` endpoint with Basic authentication credentials, for simplicity you can use the ``email`` and the ``password`` of any registered user. ::
 
     curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users/1 
 
@@ -95,14 +95,14 @@ Quite the same as before, but now the user is activated.
 Get list of users
 .................
 
-You can also get the full list of registered users by making a `GET` request to the `/api/users` endpoint. Not to mention you still need authentication to pass. ::
+You can also get the full list of registered users by making a ``GET`` request to the ``/api/users`` endpoint. Not to mention you still need authentication to pass. ::
 
     curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users
     
 Update a user
 .............
 
-To update a single user you need to pass the key-value pairs of the fields that should be modified to the `/api/users/<user_id>` using a `PUT` request ::
+To update a single user you need to pass the key-value pairs of the fields that should be modified to the ``/api/users/<user_id>`` using a ``PUT`` request ::
 
     curl -u foo@bar.com:bar -X PUT http://127.0.0.1:5000/api/users/1 -d password=foobar
 
