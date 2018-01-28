@@ -5,6 +5,7 @@ from itsdangerous import URLSafeTimedSerializer
 from vimcar.settings import Config
 from flask_mail import Message
 from vimcar.extensions import mail
+from flask import url_for, render_template
 
 
 def generate_confirmation_token(email):
@@ -27,3 +28,10 @@ def send_email(to, subject, template):
     """Send an email."""
     msg = Message(subject, recipients=[to], html=template)
     mail.send(msg)
+
+def send_confirmation_email(to):
+    """Send a confirmation email to the registered user."""
+    token = generate_confirmation_token(to)
+    confirm_url = url_for('confirmationview', token=token, _external=True)
+    html = render_template('confirmation.html', confirm_url=confirm_url)
+    send_email(to, 'Vimcar - confirm your registration', html)
