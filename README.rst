@@ -1,5 +1,9 @@
+.. image:: https://travis-ci.org/Kamforka/vimcar-backend-challenge.svg
+    :target: https://travis-ci.org/Kamforka/vimcar-backend-challenge
+    :alt: Build Status
 Vimcar backend API coding challenge
 ====================================
+
 
 Vimcar backend application by Szabolcs Antal.
 
