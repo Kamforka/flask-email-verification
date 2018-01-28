@@ -62,13 +62,9 @@ def user(db):
 
 @pytest.fixture(scope='function')
 def testapp_with_auth(app, user):
-    """A JWT authenticated Webtest App."""
+    """A Basic authenticated Webtest App."""
     _testapp_with_auth = TestApp(app)
 
-    # important to use `post_json` method here instead of `post`, with the latter
-    # the jwt auth handler cannot find the request data for some reason
-    token = _testapp_with_auth.post_json('/auth', dict(username=user.username,
-                                                       password='myprecious')).json['access_token']
 
-    _testapp_with_auth.authorization = ('JWT', token)
+    _testapp_with_auth.authorization = ('Basic', (user.email, 'myprecious'))
     return _testapp_with_auth
