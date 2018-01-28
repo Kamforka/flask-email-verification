@@ -7,11 +7,19 @@ from webargs.flaskparser import use_args
 
 from vimcar.auth import auth
 from vimcar.models.users import User
-from vimcar.utils import confirm_token, generate_confirmation_token, send_email
+from vimcar.utils import send_email, confirm_token, send_confirmation_email
 
-user_args = {
+
+user_post_args = {
+    'email': argfields.Str(required=True),
+    'password': argfields.Str(required=True),
+}
+
+
+user_put_args = {
     'email': argfields.Str(),
     'password': argfields.Str(),
+    'active': argfields.Boolean(),
 }
 
 
@@ -34,7 +42,7 @@ class UserView(Resource):
         return 'User not found', 404
 
     @auth.login_required
-    @use_args(user_args)
+    @use_args(user_put_args)
     def put(self, args, user_id):
         """Update a user."""
         user = User.get_by_id(user_id)
@@ -54,7 +62,7 @@ class UserViewList(Resource):
         """List users."""
         return User.query.all(), 200
 
-    @use_args(user_args)
+    @use_args(user_post_args)
     def post(self, args):
         """Register user."""
         user = User.query.filter_by(email=args['email']).first()
@@ -64,11 +72,7 @@ class UserViewList(Resource):
         new_user = User.create(email=args['email'],
                                password=args['password'])
 
-        token = generate_confirmation_token(new_user.email)
-        confirm_url = url_for('confirmationview', token=token, _external=True)
-        html = render_template('confirmation.html', confirm_url=confirm_url)
-        send_email(to=new_user.email, subject='Vimcar - confirm your registration', template=html)
-
+        send_confirmation_email(new_user.email)
         return marshal(new_user, resource_fields), 201
 
 
@@ -79,9 +83,9 @@ class ConfirmationView(Resource):
         """Check confirmation token."""
         email = confirm_token(token)
         user = User.query.filter_by(email=email).first()
-        if user.active:
-            return 'Account is already confirmed.'
         if user:
+            if user.active:
+                return 'Account is already confirmed.', 200
             user.update(active=True)
-            return 'Account confirmation was sucessful.', 200
+            return 'Account confirmation was successful.', 200
         return 'Invalid confirmation token.', 406
