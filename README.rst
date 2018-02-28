@@ -1,11 +1,11 @@
 .. image:: https://travis-ci.org/Kamforka/vimcar-backend-challenge.svg
     :target: https://travis-ci.org/Kamforka/vimcar-backend-challenge
     :alt: Build Status
-Vimcar backend API coding challenge
+Flask email verification REST API
 ====================================
 
 
-Vimcar backend application by Szabolcs Antal.
+A Flask REST API to verifiy user registration by Szabolcs Antal.
 
 
 Quickstart
@@ -15,8 +15,8 @@ Quickstart
 
 First run the following commands to bootstrap your environment ::
 
-    git clone https://github.com/kamforka/vimcar-backend-challenge
-    cd vimcar-backend-challenge
+    git clone https://github.com/kamforka/flask-email-verification
+    cd flask-email-verification
     pip install -r requirements/dev.txt
 
 Then set the ``FLASK_APP`` and ``FLASK_DEBUG``
@@ -38,7 +38,7 @@ you should override the below configurations in the ``settings.py`` file ::
     MAIL_PORT = 2525
     MAIL_USERNAME = 'a9b27dbd9c4f39'
     MAIL_PASSWORD = 'ffbab59f515653'
-    MAIL_DEFAULT_SENDER = 'noreply@vimcar.de'
+    MAIL_DEFAULT_SENDER = 'noreply@whatever.com'
 
 Now you can start up the application ::
 
@@ -70,7 +70,7 @@ You will get a response like this ::
         "email": "foo@bar.com",
         "id": 1
     }
-    
+
 Confirm registration
 ....................
 
@@ -83,7 +83,7 @@ Get user by id
 
 In order to get a user from the API you must make a ``GET`` request to the ``/api/users/<user_id>`` endpoint with Basic authentication credentials, for simplicity you can use the ``email`` and the ``password`` of any registered user. ::
 
-    curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users/1 
+    curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users/1
 
 If everything went fine during the registration and activation you will probably get a similiar response as below ::
 
@@ -92,7 +92,7 @@ If everything went fine during the registration and activation you will probably
         "email": "foo@bar.com",
         "id": 1
     }
-    
+
 Quite the same as before, but now the user is activated.
 
 
@@ -102,7 +102,7 @@ Get list of users
 You can also get the full list of registered users by making a ``GET`` request to the ``/api/users`` endpoint. Not to mention you still need authentication to pass. ::
 
     curl -u foo@bar.com:bar -X GET http://127.0.0.1:5000/api/users
-    
+
 Update a user
 .............
 
