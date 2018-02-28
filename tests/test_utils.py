@@ -2,7 +2,7 @@
 """Utility unit tests."""
 import pytest
 
-from vimcar.utils import confirm_token, generate_confirmation_token
+from server.utils import confirm_token, generate_confirmation_token
 
 
 class TestUtilities:

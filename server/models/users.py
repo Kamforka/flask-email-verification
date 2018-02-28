@@ -4,8 +4,8 @@ import datetime as dt
 
 from flask_login import UserMixin
 
-from vimcar.database import Column, Model, SurrogatePK, db
-from vimcar.extensions import bcrypt
+from server.database import Column, Model, SurrogatePK, db
+from server.extensions import bcrypt
 
 
 class User(UserMixin, SurrogatePK, Model):

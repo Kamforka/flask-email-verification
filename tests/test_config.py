@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test configs."""
-from vimcar.app import create_app
-from vimcar.settings import DevConfig, ProdConfig
+from server.app import create_app
+from server.settings import DevConfig, ProdConfig
 
 
 def test_production_config(api):

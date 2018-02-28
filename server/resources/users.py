@@ -5,10 +5,9 @@ from flask_restful import Resource, fields, marshal, marshal_with
 from webargs import fields as argfields
 from webargs.flaskparser import use_args
 
-from vimcar.auth import auth
-from vimcar.models.users import User
-from vimcar.utils import send_email, confirm_token, send_confirmation_email
-
+from server.auth import auth
+from server.models.users import User
+from server.utils import confirm_token, send_confirmation_email, send_email
 
 user_post_args = {
     'email': argfields.Str(required=True),

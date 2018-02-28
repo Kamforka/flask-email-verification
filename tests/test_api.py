@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Model unit tests."""
 import pytest
-from vimcar.models.users import User
-from vimcar.utils import generate_confirmation_token
+from server.models.users import User
+from server.utils import generate_confirmation_token
 
 from .factories import UserFactory
 

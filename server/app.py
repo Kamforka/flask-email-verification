@@ -2,10 +2,10 @@
 """The app module, containing the app factory function."""
 from flask import Flask
 
-from vimcar import commands
-from vimcar.extensions import api, bcrypt, db, migrate, mail
-from vimcar.resources import users
-from vimcar.settings import ProdConfig
+from . import commands
+from server.extensions import api, bcrypt, db, mail, migrate
+from server.resources import users
+from server.settings import ProdConfig
 
 
 def create_app(config_object=ProdConfig, api=api):

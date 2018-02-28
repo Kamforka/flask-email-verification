@@ -3,8 +3,8 @@
 from factory import PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
-from vimcar.database import db
-from vimcar.models.users import User
+from server.database import db
+from server.models.users import User
 
 
 class BaseFactory(SQLAlchemyModelFactory):

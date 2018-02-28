@@ -5,9 +5,9 @@ import pytest
 from flask_restful import Api
 from webtest import TestApp
 
-from vimcar.app import create_app
-from vimcar.database import db as _db
-from vimcar.settings import TestConfig
+from server.app import create_app
+from server.database import db as _db
+from server.settings import TestConfig
 
 from .factories import UserFactory
 

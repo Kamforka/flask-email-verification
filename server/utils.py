@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """Helper utilities and decorators."""
 
-from itsdangerous import URLSafeTimedSerializer
-from vimcar.settings import Config
+from flask import render_template, url_for
 from flask_mail import Message
-from vimcar.extensions import mail
-from flask import url_for, render_template
+from itsdangerous import URLSafeTimedSerializer
+
+from server.extensions import mail
+from server.settings import Config
 
 
 def generate_confirmation_token(email):

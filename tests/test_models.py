@@ -4,7 +4,7 @@ import datetime as dt
 
 import pytest
 
-from vimcar.models.users import User
+from server.models.users import User
 
 from .factories import UserFactory
 

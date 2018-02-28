@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Basic authentication moduel for the app."""
 from flask_httpauth import HTTPBasicAuth
-from vimcar.models.users import User
+
+from server.models.users import User
 
 auth = HTTPBasicAuth()
 
