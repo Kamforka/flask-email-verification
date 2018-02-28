@@ -35,4 +35,4 @@ def send_confirmation_email(to):
     token = generate_confirmation_token(to)
     confirm_url = url_for('confirmationview', token=token, _external=True)
     html = render_template('confirmation.html', confirm_url=confirm_url)
-    send_email(to, 'Vimcar - confirm your registration', html)
+    send_email(to, 'Test server - confirm your registration', html)
