@@ -28,7 +28,7 @@ class ProdConfig(Config):
     DEBUG = False
     DB_NAME = 'prod.db'
     DB_PATH = os.path.join(Config.PROJECT_ROOT, 'data', DB_NAME)
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
 
 
