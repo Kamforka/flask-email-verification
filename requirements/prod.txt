@@ -6,6 +6,7 @@ Werkzeug==0.12.2
 itsdangerous==0.24
 click>=5.0
 webargs==1.7.0
+gunicorn
 
 # Database
 Flask-SQLAlchemy==2.2
